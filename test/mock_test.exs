@@ -54,4 +54,25 @@ defmodule MockTest do
     assert String.downcase("A") == "a"
   end
 
+  defmodule Funk do
+    def hip? do
+      false
+    end
+
+    def hop? do
+      hip?
+    end
+
+    def chicken? do
+      false
+    end
+  end
+
+  test "funk" do
+    with_mock Funk, [:passthrough], [hip?: fn() -> true end] do
+      Funk.chicken?
+      assert Funk.hop?
+    end
+  end
+
 end
